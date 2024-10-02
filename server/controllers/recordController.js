@@ -2,6 +2,12 @@ const asyncHandler = require("express-async-handler");
 const Record = require("../models/record");
 const notFoundError = require("../errors/errors.js");
 
+// render record page
+
+const renderRecord = (req, res) => {
+  res.render("record");
+};
+
 // retrieves all records
 const fetchRecords = asyncHandler(async (req, res) => {
   const records = await Record.find();
@@ -66,6 +72,7 @@ const deleteRecord = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
+  renderRecord,
   fetchRecords,
   fetchRecord,
   updateRecord,

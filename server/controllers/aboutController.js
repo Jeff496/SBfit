@@ -1,5 +1,3 @@
-const renderAbout = (req, res) => {
+module.exports.renderAbout = (req, res) => {
   res.render("about");
 };
-
-module.exports = renderAbout;

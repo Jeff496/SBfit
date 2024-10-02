@@ -7,10 +7,11 @@ recordRouter.use((res, req, next) => {
   next();
 });
 
-recordRouter.get("/", recordController.fetchRecords);
 recordRouter.get("/:id", recordController.fetchRecord);
-recordRouter.post("/", recordController.createRecord);
 recordRouter.put("/:id", recordController.updateRecord);
 recordRouter.delete("/:id", recordController.deleteRecord);
+recordRouter.get("/all", recordController.fetchRecords);
+recordRouter.post("/", recordController.createRecord);
+recordRouter.get("/", recordController.renderRecord);
 
 module.exports = recordRouter;
