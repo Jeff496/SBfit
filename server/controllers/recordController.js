@@ -5,7 +5,7 @@ const notFoundError = require("../errors/errors.js");
 // render record page
 
 const renderRecord = (req, res) => {
-  res.render("record");
+  res.render("record", { title: "record" });
 };
 
 // retrieves all records

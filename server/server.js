@@ -27,7 +27,7 @@ connectDb();
 
 // routing
 app.use("/record", recordRouter);
-app.use("/home", homeRouter);
+app.use("/", homeRouter);
 app.use("/about", aboutRouter);
 
 // error middleware
