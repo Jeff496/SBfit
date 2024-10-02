@@ -25,6 +25,7 @@ app.use("/record", recordRouter);
 
 app.use((err, req, res, next) => {
   console.log("app-level error middleware");
+  console.error(err.stack);
   res.status(err.statusCode || 500).send(err.message);
 });
 
