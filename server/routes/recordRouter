@@ -1,0 +1,11 @@
+const { Router } = require("express");
+const recordRouter = Router();
+const recordController = require("../controllers/recordController");
+
+recordRouter.get("/", recordController.fetchRecords);
+recordRouter.get("/:id", recordController.fetchRecord);
+recordRouter.post("/", recordController.createRecord);
+recordRouter.put("/:id", recordController.updateRecord);
+recordRouter.delete("/:id", recordController.deleteRecord);
+
+module.exports = recordRouter;
