@@ -21,5 +21,12 @@ connectDb();
 // routing
 app.use("/record", recordRouter);
 
+// error middleware
+
+app.use((err, req, res, next) => {
+  console.log("app-level error middleware");
+  res.status(err.statusCode || 500).send(err.message);
+});
+
 // server
 app.listen(process.env.PORT);
