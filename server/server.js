@@ -8,9 +8,16 @@ const express = require("express");
 const cors = require("cors");
 const connectDb = require("./config/connectDb");
 const recordRouter = require("./routes/recordRouter");
+const homeRouter = require("./routes/homeRouter");
+const aboutRouter = require("./routes/aboutRouter");
+const path = require("node:path");
 
 // initialize express app
 const app = express();
+
+// view engine
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
 
 // express config
 app.use(express.json());
@@ -20,9 +27,10 @@ connectDb();
 
 // routing
 app.use("/record", recordRouter);
+app.use("/home", homeRouter);
+app.use("/about", aboutRouter);
 
 // error middleware
-
 app.use((err, req, res, next) => {
   console.log("app-level error middleware");
   console.error(err.stack);
