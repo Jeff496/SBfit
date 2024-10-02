@@ -6,7 +6,7 @@ if (process.env.NODE_ENV != "prod") {
 // dependencies
 const express = require("express");
 const cors = require("cors");
-const connectDb = require("./config/connectDb");
+const mongoose = require("mongoose");
 const recordRouter = require("./routes/recordRouter");
 const homeRouter = require("./routes/homeRouter");
 const aboutRouter = require("./routes/aboutRouter");
@@ -24,9 +24,6 @@ app.use(express.static(assetPath));
 // express config
 app.use(express.json());
 
-// connect to db
-connectDb();
-
 // routing
 app.use("/record", recordRouter);
 app.use("/", homeRouter);
@@ -39,5 +36,13 @@ app.use((err, req, res, next) => {
   res.status(err.statusCode || 500).send(err.message);
 });
 
-// server
-app.listen(process.env.PORT);
+// connect to db and listen for requests
+mongoose
+  .connect(process.env.DB_URI)
+  .then(() => {
+    console.log("connected to db");
+    app.listen(process.env.PORT);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
