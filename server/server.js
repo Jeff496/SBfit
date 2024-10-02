@@ -11,6 +11,7 @@ const recordRouter = require("./routes/recordRouter");
 const homeRouter = require("./routes/homeRouter");
 const aboutRouter = require("./routes/aboutRouter");
 const path = require("node:path");
+const assetPath = path.join(__dirname, "public");
 
 // initialize express app
 const app = express();
@@ -18,6 +19,7 @@ const app = express();
 // view engine
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+app.use(express.static(assetPath));
 
 // express config
 app.use(express.json());
