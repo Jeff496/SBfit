@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+body {
+  background-color: grey;
+}
+
+header {
+  background-color: white;
+}
+
+header .container {
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header a {
+  text-decoration: none;
+  color: green;
+}
+
+.pages {
+  padding: 20px;
+  margin: 0 auto;
+}
