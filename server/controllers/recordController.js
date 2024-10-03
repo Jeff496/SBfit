@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Record = require("../models/record");
+const mongoose = require("mongoose");
 const notFoundError = require("../errors/errors.js");
 
 // render record page
@@ -18,6 +19,11 @@ const fetchRecords = asyncHandler(async (req, res) => {
 // retrieve a record by id
 const fetchRecord = asyncHandler(async (req, res) => {
   const recordId = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(recordId)) {
+    throw new notFoundError("Bad id");
+  }
+
   const record = await Record.findById(recordId);
 
   if (!record) {
@@ -42,11 +48,14 @@ const createRecord = asyncHandler(async (req, res) => {
 // update a record
 const updateRecord = asyncHandler(async (req, res) => {
   const recordId = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(recordId)) {
+    throw new notFoundError("Bad id");
+  }
+
   const { name, sets, reps } = req.body;
   const updated = await Record.findByIdAndUpdate(recordId, {
-    name,
-    sets,
-    reps,
+    ...req.body,
   });
 
   if (!updated) {
@@ -62,6 +71,11 @@ const updateRecord = asyncHandler(async (req, res) => {
 // delete a record
 const deleteRecord = asyncHandler(async (req, res) => {
   const recordId = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(recordId)) {
+    throw new notFoundError("Bad id");
+  }
+
   const deleted = await Record.findByIdAndDelete({ _id: recordId });
 
   if (!deleted) {

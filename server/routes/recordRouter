@@ -7,10 +7,11 @@ recordRouter.use((res, req, next) => {
   next();
 });
 
-recordRouter.get("/:id", recordController.fetchRecord);
-recordRouter.put("/:id", recordController.updateRecord);
-recordRouter.delete("/:id", recordController.deleteRecord);
+// all route must be on top, other all gets interpreted as a bad id
 recordRouter.get("/all", recordController.fetchRecords);
+recordRouter.get("/:id", recordController.fetchRecord);
+recordRouter.patch("/:id", recordController.updateRecord);
+recordRouter.delete("/:id", recordController.deleteRecord);
 recordRouter.post("/", recordController.createRecord);
 recordRouter.get("/", recordController.renderRecord);
 
