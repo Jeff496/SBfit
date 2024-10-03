@@ -26,8 +26,8 @@ app.use(express.json());
 
 // routing
 app.use("/record", recordRouter);
-app.use("/", homeRouter);
-app.use("/about", aboutRouter);
+// app.use("/", homeRouter);
+// app.use("/about", aboutRouter);
 
 // error middleware
 app.use((err, req, res, next) => {
