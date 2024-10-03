@@ -23,6 +23,7 @@ app.use(express.static(assetPath));
 
 // express config
 app.use(express.json());
+app.use(cors()); // all origins for testing, fix for prod
 
 // routing
 app.use("/record", recordRouter);
