@@ -1,6 +1,9 @@
+import { useAllWorkoutsContext } from "../hooks/useAllWorkoutsContext";
 import { useState } from "react";
+import { ACTION_TYPES } from "../reducers/actionTypes";
 
 const WorkoutForm = () => {
+  const { dispatch } = useAllWorkoutsContext();
   const [title, setTitle] = useState("");
   const [sets, setSets] = useState("");
   const [reps, setReps] = useState("");
@@ -29,6 +32,7 @@ const WorkoutForm = () => {
       setReps("");
       setError(null);
       console.log("new workout added", json);
+      dispatch({ type: ACTION_TYPES.CREATE_WORKOUT, payload: json.record });
     }
   };
 

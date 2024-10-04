@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useAllWorkoutsContext } from "../hooks/useAllWorkoutsContext";
+import { ACTION_TYPES } from "../reducers/actionTypes";
 
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
-  const [workouts, setWorkouts] = useState(null);
+  const { workouts, dispatch } = useAllWorkoutsContext();
 
   useEffect(() => {
     const fetchWorkouts = async () => {
@@ -12,7 +14,7 @@ const Home = () => {
       const json = await response.json();
 
       if (response.ok) {
-        setWorkouts(json.records);
+        dispatch({ type: ACTION_TYPES.SET_WORKOUTS, payload: json.records });
         console.log("fetch success");
       }
     };
