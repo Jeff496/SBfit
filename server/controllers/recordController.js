@@ -30,9 +30,9 @@ const fetchRecord = asyncHandler(async (req, res) => {
 
 // create a record
 const createRecord = asyncHandler(async (req, res) => {
-  const { name, sets, reps } = req.body;
+  const { title, sets, reps } = req.body;
   const record = await Record.create({
-    name,
+    title,
     sets,
     reps,
   });
@@ -48,7 +48,7 @@ const updateRecord = asyncHandler(async (req, res) => {
     throw new notFoundError("Bad id");
   }
 
-  const { name, sets, reps } = req.body;
+  const { title, sets, reps } = req.body;
   const updated = await Record.findByIdAndUpdate(recordId, {
     ...req.body,
   });

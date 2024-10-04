@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const recordSchema = new mongoose.Schema(
   {
-    name: {
+    title: {
       type: String,
       required: true,
     },
