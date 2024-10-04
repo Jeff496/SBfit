@@ -14,6 +14,13 @@ recordRouter.patch("/:id", recordController.updateRecord);
 recordRouter.delete("/:id", recordController.deleteRecord);
 recordRouter.post("/", recordController.createRecord);
 
+// error handling middleware
+// replaces all the throw errors in controller of not found, etc.
+// bad id errors still handled by controllers
+recordRouter.use((err, req, res, next) => {
+  res.status(err.statusCode).json({ err: err.message });
+});
+
 // implement later for client-side hydration?
 // recordRouter.get("/", recordController.renderRecord);
 

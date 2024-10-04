@@ -1,7 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Record = require("../models/record");
 const mongoose = require("mongoose");
-const notFoundError = require("../errors/errors.js");
 
 // render record page
 
@@ -25,10 +24,6 @@ const fetchRecord = asyncHandler(async (req, res) => {
   }
 
   const record = await Record.findById(recordId);
-
-  if (!record) {
-    throw new notFoundError("Record to retrieve not found");
-  }
 
   res.json({ record });
 });
@@ -58,10 +53,6 @@ const updateRecord = asyncHandler(async (req, res) => {
     ...req.body,
   });
 
-  if (!updated) {
-    throw new notFoundError("Record to update not found");
-  }
-
   // to show updated record as a json
   const record = await Record.findById(recordId);
 
@@ -77,10 +68,6 @@ const deleteRecord = asyncHandler(async (req, res) => {
   }
 
   const deleted = await Record.findByIdAndDelete({ _id: recordId });
-
-  if (!deleted) {
-    throw new notFoundError("Record to delete not found");
-  }
 
   res.json({ success: "successfully deleted" });
 });
