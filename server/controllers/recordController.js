@@ -69,7 +69,7 @@ const deleteRecord = asyncHandler(async (req, res) => {
 
   const deleted = await Record.findByIdAndDelete({ _id: recordId });
 
-  res.json({ success: "successfully deleted" });
+  res.json({ deleted });
 });
 
 module.exports = {
