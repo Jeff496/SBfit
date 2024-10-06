@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { useAllWorkoutsContext } from "../hooks/useAllWorkoutsContext";
 import { ACTION_TYPES } from "../reducers/actionTypes";
+import { format } from "date-fns";
 
 const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useAllWorkoutsContext();
@@ -29,7 +30,7 @@ const WorkoutDetails = ({ workout }) => {
       <h3>{workout.title}</h3>
       <p>Sets: {workout.sets}</p>
       <p>Reps: {workout.reps}</p>
-      <p>Workout created at: {workout.createdAt || "no date created"}</p>
+      <p>{format(new Date(workout.createdAt), "MM-dd-yyyy")}</p>
       <button onClick={handleClick}>Delete</button>
     </div>
   );
