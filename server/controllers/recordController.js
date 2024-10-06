@@ -73,9 +73,9 @@ const updateRecord = asyncHandler(async (req, res) => {
   });
 
   // to show updated record as a json
-  const record = await Record.findById(recordId);
+  const update = await Record.findById(recordId);
 
-  res.json({ record });
+  res.json({ update });
 });
 
 // delete a record
