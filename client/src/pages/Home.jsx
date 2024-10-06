@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useAllWorkoutsContext } from "../hooks/useAllWorkoutsContext";
+import { WorkoutContextProvider } from "../context/workoutContext";
 import { ACTION_TYPES } from "../reducers/actionTypes";
 
 import WorkoutDetails from "../components/WorkoutDetails";
@@ -30,7 +31,9 @@ const Home = () => {
             <WorkoutDetails key={workout._id} workout={workout} />
           ))}
       </div>
-      <WorkoutForm />
+      <WorkoutContextProvider>
+        <WorkoutForm />
+      </WorkoutContextProvider>
     </div>
   );
 };
