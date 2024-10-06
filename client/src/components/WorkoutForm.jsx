@@ -1,12 +1,11 @@
 import { useAllWorkoutsContext } from "../hooks/useAllWorkoutsContext";
+import { useWorkoutContext } from "../hooks/useWorkoutContext";
 import { useState } from "react";
 import { ACTION_TYPES } from "../reducers/actionTypes";
 
 const WorkoutForm = () => {
-  const { dispatch } = useAllWorkoutsContext();
-  const [title, setTitle] = useState("");
-  const [sets, setSets] = useState("");
-  const [reps, setReps] = useState("");
+  const { dispatch: allWorkoutsDispatch } = useAllWorkoutsContext();
+  const { title, sets, reps, dispatch: workoutDispatch } = useWorkoutContext();
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -27,13 +26,32 @@ const WorkoutForm = () => {
       setError(json.err);
     }
     if (response.ok) {
-      setTitle("");
-      setSets("");
-      setReps("");
+      workoutDispatch({
+        type: ACTION_TYPES.SET_INPUTS,
+        payload: { name: "title", value: "" },
+      });
+      workoutDispatch({
+        type: ACTION_TYPES.SET_INPUTS,
+        payload: { name: "sets", value: "" },
+      });
+      workoutDispatch({
+        type: ACTION_TYPES.SET_INPUTS,
+        payload: { name: "reps", value: "" },
+      });
       setError(null);
       console.log("new workout added", json);
-      dispatch({ type: ACTION_TYPES.CREATE_WORKOUT, payload: json.record });
+      allWorkoutsDispatch({
+        type: ACTION_TYPES.CREATE_WORKOUT,
+        payload: json.record,
+      });
     }
+  };
+
+  const handleChange = (e) => {
+    workoutDispatch({
+      type: ACTION_TYPES.SET_INPUTS,
+      payload: { name: e.target.name, value: e.target.value },
+    });
   };
 
   return (
@@ -41,25 +59,13 @@ const WorkoutForm = () => {
       <h3>Add a workout</h3>
 
       <label>Exercise Title:</label>
-      <input
-        type="text"
-        onChange={(e) => setTitle(e.target.value)}
-        value={title}
-      />
+      <input name="title" type="text" onChange={handleChange} value={title} />
 
       <label>Sets:</label>
-      <input
-        type="number"
-        onChange={(e) => setSets(e.target.value)}
-        value={sets}
-      />
+      <input name="sets" type="number" onChange={handleChange} value={sets} />
 
       <label>Reps:</label>
-      <input
-        type="number"
-        onChange={(e) => setReps(e.target.value)}
-        value={reps}
-      />
+      <input name="reps" type="number" onChange={handleChange} value={reps} />
 
       <button>Add workout</button>
       {error && <div className="error">{error}</div>}
