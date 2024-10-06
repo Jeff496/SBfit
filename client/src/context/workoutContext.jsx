@@ -5,7 +5,7 @@ import { workoutReducer } from "../reducers/workoutReducer";
 export const WorkoutContext = createContext();
 
 export const WorkoutContextProvider = ({ children }) => {
-  const { state, dispatch } = useReducer(workoutReducer, {
+  const [state, dispatch] = useReducer(workoutReducer, {
     title: "",
     sets: "",
     reps: "",
