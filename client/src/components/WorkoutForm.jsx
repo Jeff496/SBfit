@@ -7,6 +7,7 @@ const WorkoutForm = () => {
   const { dispatch: allWorkoutsDispatch } = useAllWorkoutsContext();
   const { title, sets, reps, dispatch: workoutDispatch } = useWorkoutContext();
   const [error, setError] = useState(null);
+  const [emptyFields, setEmptyFields] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +24,8 @@ const WorkoutForm = () => {
     const json = await response.json();
 
     if (!response.ok) {
-      setError(json.err);
+      setError(json.error);
+      setEmptyFields(json.emptyFields);
     }
     if (response.ok) {
       workoutDispatch({
@@ -39,6 +41,7 @@ const WorkoutForm = () => {
         payload: { name: "reps", value: "" },
       });
       setError(null);
+      setEmptyFields([]);
       console.log("new workout added", json);
       allWorkoutsDispatch({
         type: ACTION_TYPES.CREATE_WORKOUT,
@@ -59,13 +62,31 @@ const WorkoutForm = () => {
       <h3>Add a workout</h3>
 
       <label>Exercise Title:</label>
-      <input name="title" type="text" onChange={handleChange} value={title} />
+      <input
+        name="title"
+        type="text"
+        onChange={handleChange}
+        value={title}
+        className={emptyFields.includes("title") ? "error" : ""}
+      />
 
       <label>Sets:</label>
-      <input name="sets" type="number" onChange={handleChange} value={sets} />
+      <input
+        name="sets"
+        type="number"
+        onChange={handleChange}
+        value={sets}
+        className={emptyFields.includes("sets") ? "error" : ""}
+      />
 
       <label>Reps:</label>
-      <input name="reps" type="number" onChange={handleChange} value={reps} />
+      <input
+        name="reps"
+        type="number"
+        onChange={handleChange}
+        value={reps}
+        className={emptyFields.includes("reps") ? "error" : ""}
+      />
 
       <button>Add workout</button>
       {error && <div className="error">{error}</div>}

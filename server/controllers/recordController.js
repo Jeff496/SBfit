@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Record = require("../models/record");
 const mongoose = require("mongoose");
+const e = require("express");
 
 // render record page
 
@@ -31,6 +32,24 @@ const fetchRecord = asyncHandler(async (req, res) => {
 // create a record
 const createRecord = asyncHandler(async (req, res) => {
   const { title, sets, reps } = req.body;
+
+  let emptyFields = [];
+
+  if (!title) {
+    emptyFields.push("title");
+  }
+  if (!sets) {
+    emptyFields.push("sets");
+  }
+  if (!reps) {
+    emptyFields.push("reps");
+  }
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill in all the fields", emptyFields });
+  }
+
   const record = await Record.create({
     title,
     sets,
