@@ -33,3 +33,8 @@ header a {
 input.error {
   border: 1px solid red;
 }
+
+.workout-details input {
+  display: block;
+  margin: 2px 0;
+}

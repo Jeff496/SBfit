@@ -1,12 +1,16 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { useAllWorkoutsContext } from "../hooks/useAllWorkoutsContext";
 import { ACTION_TYPES } from "../reducers/actionTypes";
 import { format } from "date-fns";
+import { useEffect } from "react";
 
 const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useAllWorkoutsContext();
+  const [changed, setChanged] = useState(false);
+  const [tempUpdate, setTempUpdate] = useState({ ...workout });
 
-  const handleClick = async () => {
+  const handleDelete = async () => {
     const response = await fetch(
       `http://localhost:3000/record/${workout._id}`,
       {
@@ -25,13 +29,82 @@ const WorkoutDetails = ({ workout }) => {
     }
   };
 
+  const handleChange = (e) => {
+    setTempUpdate({ ...tempUpdate, [e.target.name]: e.target.value });
+  };
+
+  const handleCancel = () => {
+    setTempUpdate({ ...workout });
+    setChanged(false);
+  };
+
+  const handleSave = async () => {
+    const response = await fetch(
+      `http://localhost:3000/record/${workout._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(tempUpdate),
+      }
+    );
+
+    const json = await response.json();
+
+    if (response.ok) {
+      dispatch({
+        type: ACTION_TYPES.UPDATE_WORKOUT,
+        payload: { id: tempUpdate._id, update: json.update },
+      });
+      setChanged(false);
+      console.log(json.update);
+    }
+  };
+
+  useEffect(() => {
+    let isChanged = false;
+    if (workout.title !== tempUpdate.title) isChanged = true;
+    if (workout.sets !== Number(tempUpdate.sets)) isChanged = true;
+    if (workout.reps !== Number(tempUpdate.reps)) isChanged = true;
+    setChanged(isChanged);
+  }, [
+    tempUpdate.title,
+    tempUpdate.sets,
+    tempUpdate.reps,
+    workout.title,
+    workout.sets,
+    workout.reps,
+  ]);
+
   return (
     <div className="workout-details">
-      <h3>{workout.title}</h3>
-      <p>Sets: {workout.sets}</p>
-      <p>Reps: {workout.reps}</p>
+      <input
+        name="title"
+        type="text"
+        value={tempUpdate.title}
+        onChange={handleChange}
+      />
+      <input
+        name="sets"
+        type="number"
+        value={tempUpdate.sets}
+        onChange={handleChange}
+      />
+      <input
+        name="reps"
+        type="number"
+        value={tempUpdate.reps}
+        onChange={handleChange}
+      />
       <p>{format(new Date(workout.createdAt), "MM-dd-yyyy")}</p>
-      <button onClick={handleClick}>Delete</button>
+      {changed && (
+        <div className="update buttons">
+          <button onClick={handleCancel}>Cancel</button>
+          <button onClick={handleSave}>Save</button>
+        </div>
+      )}
+      <button onClick={handleDelete}>Delete</button>
     </div>
   );
 };
