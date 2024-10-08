@@ -1,6 +1,6 @@
 const { Router } = require("express");
-const recordRouter = Router();
 const recordController = require("../controllers/recordController");
+const recordRouter = Router();
 
 recordRouter.use((res, req, next) => {
   // console.log("router-level middleware, passed through record route");

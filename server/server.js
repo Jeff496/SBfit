@@ -8,6 +8,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const recordRouter = require("./routes/recordRouter");
+const userRouter = require("./routes/userRouter");
 const homeRouter = require("./routes/homeRouter");
 const aboutRouter = require("./routes/aboutRouter");
 const path = require("node:path");
@@ -27,6 +28,7 @@ app.use(cors()); // all origins for testing, fix for prod
 
 // routing
 app.use("/record", recordRouter);
+app.use("/user", userRouter);
 // app.use("/", homeRouter);
 // app.use("/about", aboutRouter);
 
