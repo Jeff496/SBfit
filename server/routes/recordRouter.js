@@ -1,11 +1,11 @@
 const { Router } = require("express");
 const recordController = require("../controllers/recordController");
+const requireAuth = require("../middleware/requireAuth");
+
 const recordRouter = Router();
 
-recordRouter.use((res, req, next) => {
-  // console.log("router-level middleware, passed through record route");
-  next();
-});
+// middleware to protect routes from unauthorized users
+recordRouter.use(requireAuth);
 
 // all route must be on top, otherwise all gets interpreted as a bad id
 recordRouter.get("/all", recordController.fetchRecords);
