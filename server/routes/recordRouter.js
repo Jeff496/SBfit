@@ -18,7 +18,7 @@ recordRouter.post("/", recordController.createRecord);
 // replaces all the throw errors in controller of not found, etc.
 // bad id errors still handled by controllers
 recordRouter.use((err, req, res, next) => {
-  console.log("route-level error middleware");
+  console.log("record router error");
   console.error(err.stack);
   res.status(err.statusCode || 500).json({ err: err.message });
 });
