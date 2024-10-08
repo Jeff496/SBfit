@@ -7,4 +7,8 @@ export const ACTION_TYPES = {
 
   // for workoutReducer
   SET_INPUTS: "SET_INPUTS",
+
+  // for authReducer
+  LOGIN: "LOGIN",
+  LOGOUT: "LOGOUT",
 };
