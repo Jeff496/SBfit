@@ -11,7 +11,8 @@ const renderRecord = (req, res) => {
 
 // retrieves all records
 const fetchRecords = asyncHandler(async (req, res) => {
-  const records = await Record.find();
+  const user_id = req.body.user_id;
+  const records = await Record.find({ user_id });
 
   res.json({ records });
 });
@@ -31,7 +32,7 @@ const fetchRecord = asyncHandler(async (req, res) => {
 
 // create a record
 const createRecord = asyncHandler(async (req, res) => {
-  const { title, sets, reps } = req.body;
+  const { title, sets, reps, user_id } = req.body;
 
   let emptyFields = [];
 
@@ -54,6 +55,7 @@ const createRecord = asyncHandler(async (req, res) => {
     title,
     sets,
     reps,
+    user_id,
   });
 
   res.json({ record });

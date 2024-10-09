@@ -12,8 +12,9 @@ const requireAuth = async (req, res, next) => {
 
   try {
     const returnedToken = jwt.verify(token, process.env.SECRET); // can destructure for id
-    const id = returnedToken._id;
-    req.user = await User.findOne({ _id: id }).select("_id");
+    const id = returnedToken.id;
+    req.body.user_id = await User.findOne({ _id: id }).select("_id"); // gives an object that holds _id
+    req.body.user_id = req.body.user_id._id.toString(); // get ._id from object and turn to string
     next();
   } catch (err) {
     console.log(err);
