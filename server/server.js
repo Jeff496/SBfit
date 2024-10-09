@@ -9,8 +9,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const recordRouter = require("./routes/recordRouter");
 const userRouter = require("./routes/userRouter");
-const homeRouter = require("./routes/homeRouter");
-const aboutRouter = require("./routes/aboutRouter");
+const graphRouter = require("./routes/graphRouter");
 const path = require("node:path");
 const assetPath = path.join(__dirname, "public");
 
@@ -29,8 +28,7 @@ app.use(cors()); // all origins for testing, fix for prod
 // routing
 app.use("/record", recordRouter);
 app.use("/user", userRouter);
-// app.use("/", homeRouter);
-// app.use("/about", aboutRouter);
+app.use("/graph", graphRouter);
 
 // error middleware
 app.use((err, req, res, next) => {

@@ -1,13 +1,12 @@
 const asyncHandler = require("express-async-handler");
 const Record = require("../models/record");
 const mongoose = require("mongoose");
-const e = require("express");
 
 // render record page
 
-const renderRecord = (req, res) => {
-  res.render("record", { title: "record" });
-};
+// const renderRecord = (req, res) => {
+//   res.render("record", { title: "record" });
+// };
 
 // retrieves all records
 const fetchRecords = asyncHandler(async (req, res) => {
