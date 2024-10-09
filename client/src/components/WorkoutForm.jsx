@@ -1,16 +1,23 @@
 import { useAllWorkoutsContext } from "../hooks/useAllWorkoutsContext";
 import { useWorkoutContext } from "../hooks/useWorkoutContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 import { useState } from "react";
 import { ACTION_TYPES } from "../reducers/actionTypes";
 
 const WorkoutForm = () => {
   const { dispatch: allWorkoutsDispatch } = useAllWorkoutsContext();
   const { title, sets, reps, dispatch: workoutDispatch } = useWorkoutContext();
+  const { user } = useAuthContext();
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user) {
+      setError("You must be logged in to create and read workouts");
+      return;
+    }
 
     const workout = { title, sets, reps };
 
@@ -19,6 +26,7 @@ const WorkoutForm = () => {
       body: JSON.stringify(workout),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
     });
     const json = await response.json();

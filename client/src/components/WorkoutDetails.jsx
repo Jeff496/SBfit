@@ -1,20 +1,29 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { useAllWorkoutsContext } from "../hooks/useAllWorkoutsContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 import { ACTION_TYPES } from "../reducers/actionTypes";
 import { format } from "date-fns";
 import { useEffect } from "react";
 
 const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useAllWorkoutsContext();
+  const { user } = useAuthContext();
   const [changed, setChanged] = useState(false);
   const [tempUpdate, setTempUpdate] = useState({ ...workout });
 
   const handleDelete = async () => {
+    if (!user) {
+      return;
+    }
+
     const response = await fetch(
       `http://localhost:3000/record/${workout._id}`,
       {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
       }
     );
 
@@ -39,12 +48,17 @@ const WorkoutDetails = ({ workout }) => {
   };
 
   const handleSave = async () => {
+    if (!user) {
+      return;
+    }
+
     const response = await fetch(
       `http://localhost:3000/record/${workout._id}`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
         },
         body: JSON.stringify(tempUpdate),
       }
