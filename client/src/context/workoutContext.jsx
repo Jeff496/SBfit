@@ -9,6 +9,7 @@ export const WorkoutContextProvider = ({ children }) => {
     title: "",
     sets: "",
     reps: "",
+    weight: "",
   });
 
   return (

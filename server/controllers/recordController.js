@@ -32,7 +32,7 @@ const fetchRecord = asyncHandler(async (req, res) => {
 
 // create a record
 const createRecord = asyncHandler(async (req, res) => {
-  const { title, sets, reps, user_id } = req.body;
+  const { title, sets, reps, weight, user_id } = req.body;
 
   let emptyFields = [];
 
@@ -45,6 +45,9 @@ const createRecord = asyncHandler(async (req, res) => {
   if (!reps) {
     emptyFields.push("reps");
   }
+  if (!weight) {
+    emptyFields.push("reps");
+  }
   if (emptyFields.length > 0) {
     return res
       .status(400)
@@ -55,6 +58,7 @@ const createRecord = asyncHandler(async (req, res) => {
     title,
     sets,
     reps,
+    weight,
     user_id,
   });
 

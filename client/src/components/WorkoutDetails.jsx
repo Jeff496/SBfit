@@ -81,14 +81,17 @@ const WorkoutDetails = ({ workout }) => {
     if (workout.title !== tempUpdate.title) isChanged = true;
     if (workout.sets !== Number(tempUpdate.sets)) isChanged = true;
     if (workout.reps !== Number(tempUpdate.reps)) isChanged = true;
+    if (workout.weight !== Number(tempUpdate.weight)) isChanged = true;
     setChanged(isChanged);
   }, [
     tempUpdate.title,
     tempUpdate.sets,
     tempUpdate.reps,
+    tempUpdate.weight,
     workout.title,
     workout.sets,
     workout.reps,
+    workout.weight,
   ]);
 
   return (
@@ -111,6 +114,12 @@ const WorkoutDetails = ({ workout }) => {
         value={tempUpdate.reps}
         onChange={handleChange}
       />
+      <input
+        name="weight"
+        type="number"
+        value={tempUpdate.weight}
+        onChange={handleChange}
+      />
       <p>{format(new Date(workout.createdAt), "MM-dd-yyyy")}</p>
       {changed && (
         <div className="update buttons">
@@ -129,6 +138,7 @@ WorkoutDetails.propTypes = {
     title: PropTypes.string.isRequired,
     sets: PropTypes.number.isRequired,
     reps: PropTypes.number.isRequired,
+    weight: PropTypes.number.isRequired,
     createdAt: PropTypes.string.isRequired,
   }).isRequired,
 };

@@ -6,7 +6,13 @@ import { ACTION_TYPES } from "../reducers/actionTypes";
 
 const WorkoutForm = () => {
   const { dispatch: allWorkoutsDispatch } = useAllWorkoutsContext();
-  const { title, sets, reps, dispatch: workoutDispatch } = useWorkoutContext();
+  const {
+    title,
+    sets,
+    reps,
+    weight,
+    dispatch: workoutDispatch,
+  } = useWorkoutContext();
   const { user } = useAuthContext();
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
@@ -19,7 +25,7 @@ const WorkoutForm = () => {
       return;
     }
 
-    const workout = { title, sets, reps };
+    const workout = { title, sets, reps, weight };
 
     const response = await fetch("http://localhost:3000/record", {
       method: "POST",
@@ -47,6 +53,10 @@ const WorkoutForm = () => {
       workoutDispatch({
         type: ACTION_TYPES.SET_INPUTS,
         payload: { name: "reps", value: "" },
+      });
+      workoutDispatch({
+        type: ACTION_TYPES.SET_INPUTS,
+        payload: { name: "weight", value: "" },
       });
       setError(null);
       setEmptyFields([]);
@@ -94,6 +104,15 @@ const WorkoutForm = () => {
         onChange={handleChange}
         value={reps}
         className={emptyFields.includes("reps") ? "error" : ""}
+      />
+
+      <label>Weight:</label>
+      <input
+        name="weight"
+        type="number"
+        onChange={handleChange}
+        value={weight}
+        className={emptyFields.includes("weight") ? "error" : ""}
       />
 
       <button>Add workout</button>
