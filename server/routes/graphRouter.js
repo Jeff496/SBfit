@@ -1,10 +1,10 @@
 const { Router } = require("express");
-const { graphController } = require("../controllers/graphController");
-const { requireAuth } = require("../middleware/requireAuth");
+const graphController = require("../controllers/graphController");
+const requireAuth = require("../middleware/requireAuth");
 
 const graphRouter = Router();
 
-graphRouter.use(requireAuth);
+// graphRouter.use(requireAuth);
 
 graphRouter.post("/", graphController.sendData);
 

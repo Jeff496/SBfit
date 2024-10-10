@@ -97,7 +97,6 @@ const deleteRecord = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  renderRecord,
   fetchRecords,
   fetchRecord,
   updateRecord,

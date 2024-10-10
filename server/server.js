@@ -28,7 +28,7 @@ app.use(cors()); // all origins for testing, fix for prod
 // routing
 app.use("/record", recordRouter);
 app.use("/user", userRouter);
-app.use("/graph", graphRouter);
+app.use("/userAnalytics", graphRouter);
 
 // error middleware
 app.use((err, req, res, next) => {
