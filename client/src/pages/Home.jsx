@@ -6,6 +6,7 @@ import { ACTION_TYPES } from "../reducers/actionTypes";
 
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
+import Graph from "../components/Graph";
 
 const Home = () => {
   const { workouts, dispatch } = useAllWorkoutsContext();
@@ -38,6 +39,9 @@ const Home = () => {
           workouts.map((workout) => (
             <WorkoutDetails key={workout._id} workout={workout} />
           ))}
+      </div>
+      <div className="graph">
+        <Graph />
       </div>
       <WorkoutContextProvider>
         <WorkoutForm />
