@@ -1,16 +1,43 @@
 import { useAllWorkoutsContext } from "../hooks/useAllWorkoutsContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 import { useState, useEffect } from "react";
 
 const Graph = () => {
+  const { user } = useAuthContext();
   const { workouts } = useAllWorkoutsContext();
   const [query, setQuery] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
   const [selectedWorkout, setSelectedWorkout] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(selectedWorkout);
     setQuery("");
+
+    const allSelectedWorkouts = workouts.filter(
+      (workout) => workout.title === selectedWorkout
+    );
+
+    console.log(allSelectedWorkouts);
+
+    const response = await fetch("http://localhost:3000/userAnalytics", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify(allSelectedWorkouts),
+    });
+
+    const json = await response.json();
+
+    if (!response.ok) {
+      console.log(json.error);
+    }
+    if (response.ok) {
+      console.log(json);
+    }
+
+    setSelectedWorkout("");
   };
 
   useEffect(() => {
