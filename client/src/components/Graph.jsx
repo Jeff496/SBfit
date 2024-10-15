@@ -5,12 +5,12 @@ const Graph = () => {
   const { workouts } = useAllWorkoutsContext();
   const [query, setQuery] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
+  const [selectedWorkout, setSelectedWorkout] = useState("");
 
   const handleSubmit = (e) => {
-    // access all workouts with the chosen title from user workouts
-    workoutsToGraph = workouts.filter(
-      (workout) => workout.title === "get from e"
-    );
+    e.preventDefault();
+    console.log(selectedWorkout);
+    setQuery("");
   };
 
   useEffect(() => {
@@ -47,12 +47,22 @@ const Graph = () => {
             onChange={(e) => setQuery(e.target.value)}
           />
           <div className="searchResults">
-            {filteredResults.map((workout, index) => (
-              <div key={index}>
-                <input type="radio" name="workoutTitle" value={workout}></input>
-                <label>{workout}</label>
-              </div>
-            ))}
+            {/* ternary operators for output depending on whether search is empty */}
+            {filteredResults.length > 0 ? (
+              filteredResults.map((workout, index) => (
+                <div key={index}>
+                  <input
+                    type="radio"
+                    name="workoutTitle"
+                    value={workout}
+                    onChange={(e) => setSelectedWorkout(e.target.value)}
+                  ></input>
+                  <label>{workout}</label>
+                </div>
+              ))
+            ) : query.length > 0 ? (
+              <p>No matching results found</p>
+            ) : null}
           </div>
           <button>Generate Graph</button>
         </form>
