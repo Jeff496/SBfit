@@ -13,16 +13,23 @@ const Graph = () => {
     );
   };
 
-  const handleInput = (e) => {
-    setQuery(e.target.value);
-  };
-
   useEffect(() => {
-    const filteredWorkouts = workouts.filter((workout) =>
-      workout.title.toLowerCase().startsWith(query.toLowerCase())
-    );
+    // set filtered workouts equal to something only if query isn't empty and get
+    // all workouts that start with query
+    let filteredWorkouts =
+      query !== ""
+        ? workouts.filter((workout) =>
+            workout.title.toLowerCase().includes(query.toLowerCase())
+          )
+        : [];
 
-    console.log("filtwork", filteredWorkouts);
+    // change workout objects to just their title
+    filteredWorkouts = filteredWorkouts.map((workout) => {
+      return workout.title;
+    });
+
+    // remove all duplicate names
+    filteredWorkouts = [...new Set(filteredWorkouts)];
 
     setFilteredResults(filteredWorkouts);
   }, [query, workouts]);
@@ -37,15 +44,15 @@ const Graph = () => {
             type="text"
             placeholder="Search workouts..."
             value={query}
-            onChange={handleInput}
+            onChange={(e) => setQuery(e.target.value)}
           />
           <div className="searchResults">
-            {console.log("filt", filteredResults)}
-            <ul>
-              {filteredResults.map((workout, index) => (
-                <li key={index}>{workout.title}</li>
-              ))}
-            </ul>
+            {filteredResults.map((workout, index) => (
+              <div key={index}>
+                <input type="radio" name="workoutTitle" value={workout}></input>
+                <label>{workout}</label>
+              </div>
+            ))}
           </div>
           <button>Generate Graph</button>
         </form>
