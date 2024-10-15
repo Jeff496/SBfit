@@ -34,14 +34,16 @@ const Home = () => {
 
   return (
     <div className="home">
-      <div className="workouts">
-        {workouts &&
-          workouts.map((workout) => (
-            <WorkoutDetails key={workout._id} workout={workout} />
-          ))}
-      </div>
-      <div className="graph">
-        <Graph />
+      <div className="container">
+        <div className="workouts">
+          {workouts &&
+            workouts.map((workout) => (
+              <WorkoutDetails key={workout._id} workout={workout} />
+            ))}
+        </div>
+        <div className="graph">
+          <Graph />
+        </div>
       </div>
       <WorkoutContextProvider>
         <WorkoutForm />

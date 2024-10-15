@@ -38,3 +38,20 @@ input.error {
   display: block;
   margin: 2px 0;
 }
+
+.home {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+}
+
+.graph {
+  padding: 0 50px;
+}
+
+.form {
+  padding: 50px 0;
+}
