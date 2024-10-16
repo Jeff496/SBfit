@@ -1,1 +1,3 @@
-# MERN-CRUD-test-app
+# SBfit
+
+## In progress workout and nutrition tracker
