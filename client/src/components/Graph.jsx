@@ -8,6 +8,7 @@ const Graph = () => {
   const [query, setQuery] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
   const [selectedWorkout, setSelectedWorkout] = useState("");
+  const [graph, setGraph] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,14 +29,17 @@ const Graph = () => {
       body: JSON.stringify(allSelectedWorkouts),
     });
 
-    const json = await response.json();
-
     if (!response.ok) {
+      const json = await response.json();
       console.log(json.error);
+      return;
     }
-    if (response.ok) {
-      console.log(json);
-    }
+
+    // Get the response as a binary object
+    const imageBlob = await response.blob();
+    // Create a URL for the image blob
+    const imageUrl = URL.createObjectURL(imageBlob);
+    setGraph(imageUrl);
 
     setSelectedWorkout("");
   };
@@ -94,7 +98,9 @@ const Graph = () => {
           <button>Generate Graph</button>
         </form>
       </div>
-      <div>{/* graph from python api */}</div>
+      <div>
+        {graph ? <img src={graph} alt="workout progress graph"></img> : null}
+      </div>
     </>
   );
 };
