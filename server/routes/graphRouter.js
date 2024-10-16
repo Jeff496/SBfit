@@ -4,7 +4,7 @@ const requireAuth = require("../middleware/requireAuth");
 
 const graphRouter = Router();
 
-// graphRouter.use(requireAuth);
+graphRouter.use(requireAuth);
 
 graphRouter.post("/", graphController.sendData);
 

@@ -1,11 +1,9 @@
 const asyncHandler = require("express-async-handler");
-const Record = require("../models/record");
 
 const sendData = asyncHandler(async (req, res) => {
-  const user_id = req.body.user_id;
-  const records = await Record.find({ user_id });
+  const records = req.body;
 
-  if (!records) {
+  if (!records || records.length === 0) {
     return res
       .status(404)
       .json({ message: "No workouts found for this user." });
@@ -23,9 +21,12 @@ const sendData = asyncHandler(async (req, res) => {
     return res.status(response.status).json({ message: response.statusText });
   }
 
-  const json = await response.json();
+  // retrieve data as binary data
+  const arrayBuffer = await response.arrayBuffer();
+  // buffer object
+  const imageBuffer = Buffer.from(arrayBuffer);
 
-  res.json({ json });
+  res.set("Content-Type", "image/png").send(imageBuffer);
 });
 
 module.exports = {
