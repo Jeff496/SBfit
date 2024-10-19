@@ -9,8 +9,8 @@ import WorkoutForm from "../components/WorkoutForm";
 import Graph from "../components/Graph";
 
 const Home = () => {
-  const { workouts, dispatch } = useAllWorkoutsContext();
-  const { user } = useAuthContext();
+  const { workouts, dispatch: allWorkoutsDispatch } = useAllWorkoutsContext();
+  const { user, dispatch: authDispatch } = useAuthContext();
 
   useEffect(() => {
     const fetchWorkouts = async () => {
@@ -21,8 +21,16 @@ const Home = () => {
       });
       const json = await response.json();
 
+      if (!response.ok) {
+        // sync jwt expired state with frontend, kick user out to login/signup
+        authDispatch({ type: ACTION_TYPES.LOGOUT });
+      }
+
       if (response.ok) {
-        dispatch({ type: ACTION_TYPES.SET_WORKOUTS, payload: json.records });
+        allWorkoutsDispatch({
+          type: ACTION_TYPES.SET_WORKOUTS,
+          payload: json.records,
+        });
         console.log("fetch success");
       }
     };
@@ -30,7 +38,7 @@ const Home = () => {
     if (user) {
       fetchWorkouts();
     }
-  }, [dispatch, user]);
+  }, [allWorkoutsDispatch, user]);
 
   return (
     <div className="home">
