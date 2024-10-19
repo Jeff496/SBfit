@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models/user");
 
 const requireAuth = async (req, res, next) => {
   const { authorization } = req.headers;
@@ -16,7 +15,7 @@ const requireAuth = async (req, res, next) => {
     req.body.user_id = id;
     next();
   } catch (err) {
-    console.log(err);
+    console.log("requireAuth controller error:", err);
     res.status(401).json({ err: err.message });
   }
 };
