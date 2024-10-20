@@ -22,7 +22,6 @@ def generate_graph():
     # final time used
     isoTime = [record['updatedAt'] for record in data]
     time = [datetime.fromisoformat(record.replace("Z", "+00:00")) for record in isoTime]
-    # print(f'time: {time}')
 
     #retrieve weight
     reps = [record['reps'] for record in data]
@@ -31,7 +30,7 @@ def generate_graph():
     # formula for one rep max used for tracking progress
     # final array for weight
     oneRepMax = [weight / (1.0278 - 0.0278 * rep) for weight, rep in zip(weights, reps)]
-    # print(f'orm', oneRepMax)
+    maxORM = max(oneRepMax)
 
     plt.figure(figsize=(10, 5))
     plt.plot(time, oneRepMax, marker='o')
@@ -40,6 +39,7 @@ def generate_graph():
     plt.ylabel('Calculated One Rep Max')
     plt.xticks(rotation=45)
     plt.grid()
+    plt.ylim(bottom=0,top=maxORM + 50)
 
     img = io.BytesIO()
     plt.savefig(img, format='png')
