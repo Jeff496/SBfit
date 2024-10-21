@@ -13,7 +13,7 @@ const WorkoutForm = () => {
     weight,
     dispatch: workoutDispatch,
   } = useWorkoutContext();
-  const { user } = useAuthContext();
+  const { user, dispatch } = useAuthContext();
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
@@ -38,8 +38,13 @@ const WorkoutForm = () => {
     const json = await response.json();
 
     if (!response.ok) {
-      setError(json.error);
-      setEmptyFields(json.emptyFields);
+      // if emptyFields is null, likely means token expired, kick user out to login/signup
+      if (!json.emptyFields) {
+        dispatch({ type: ACTION_TYPES.LOGOUT });
+      } else {
+        setError(json.error);
+        setEmptyFields(json.emptyFields);
+      }
     }
     if (response.ok) {
       workoutDispatch({
