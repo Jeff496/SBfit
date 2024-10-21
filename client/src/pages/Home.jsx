@@ -38,7 +38,7 @@ const Home = () => {
     if (user) {
       fetchWorkouts();
     }
-  }, [allWorkoutsDispatch, user]);
+  }, [allWorkoutsDispatch, user, authDispatch]);
 
   return (
     <div className="home">
