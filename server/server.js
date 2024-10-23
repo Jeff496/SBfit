@@ -12,6 +12,7 @@ const { passportConfig } = require("./config/passportConfig");
 const recordRouter = require("./routes/recordRouter");
 const userRouter = require("./routes/userRouter");
 const graphRouter = require("./routes/graphRouter");
+const googleAuthRouter = require("./routes/googleAuthRouter");
 
 // initialize express app
 const app = express();
@@ -28,6 +29,7 @@ app.use(...passportConfig);
 app.use("/record", recordRouter);
 app.use("/user", userRouter);
 app.use("/userAnalytics", graphRouter);
+app.use("/testGoogleOAuth", googleAuthRouter);
 
 // error middleware
 app.use((err, req, res, next) => {
