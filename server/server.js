@@ -7,6 +7,8 @@ if (process.env.NODE_ENV != "prod") {
 const express = require("express");
 const cors = require("cors");
 const connectDb = require("./config/connectDb");
+const sessionConfig = require("./config/sessionConfig");
+const { passportConfig } = require("./config/passportConfig");
 const recordRouter = require("./routes/recordRouter");
 const userRouter = require("./routes/userRouter");
 const graphRouter = require("./routes/graphRouter");
@@ -17,6 +19,10 @@ const app = express();
 // express config
 app.use(express.json());
 app.use(cors()); // all origins for testing, fix for prod
+
+// other configs
+app.use(sessionConfig);
+app.use(...passportConfig);
 
 // routing
 app.use("/record", recordRouter);
