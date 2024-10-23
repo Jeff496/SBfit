@@ -13,25 +13,32 @@ const Login = () => {
   };
 
   return (
-    <form className="login" onSubmit={handleSubmit}>
-      <h3>Login</h3>
+    <div className="login">
+      <form className="loginForm" onSubmit={handleSubmit}>
+        <h3>Login</h3>
 
-      <label>Email:</label>
-      <input
-        type="email"
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-      />
-      <label>Password:</label>
-      <input
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-      />
+        <label>Email:</label>
+        <input
+          type="email"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+        />
+        <label>Password:</label>
+        <input
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+        />
 
-      <button disabled={isLoading}>Login</button>
-      {error && <div className="error">{error}</div>}
-    </form>
+        <button disabled={isLoading}>Login</button>
+        {error && <div className="error">{error}</div>}
+      </form>
+      <div className="google-OAuth">
+        <a href="http://localhost:3000/passport/auth/google">
+          Login with Google
+        </a>
+      </div>
+    </div>
   );
 };
 
