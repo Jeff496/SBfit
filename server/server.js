@@ -6,7 +6,7 @@ if (process.env.NODE_ENV != "prod") {
 // dependencies
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose");
+const connectDb = require("./config/connectDb");
 const recordRouter = require("./routes/recordRouter");
 const userRouter = require("./routes/userRouter");
 const graphRouter = require("./routes/graphRouter");
@@ -31,12 +31,9 @@ app.use((err, req, res, next) => {
 });
 
 // connect to db and listen for requests
-mongoose
-  .connect(process.env.DB_URI)
-  .then(() => {
-    console.log("connected to db");
-    app.listen(process.env.PORT);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+try {
+  connectDb();
+  app.listen(process.env.PORT);
+} catch (error) {
+  console.log(error);
+}
