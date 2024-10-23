@@ -1,11 +1,11 @@
 const { Router } = require("express");
 const recordController = require("../controllers/recordController");
-const requireAuth = require("../middleware/requireAuth");
+const jwtAuth = require("../middleware/jwtAuth");
 
 const recordRouter = Router();
 
 // middleware to protect routes from unauthorized users
-recordRouter.use(requireAuth);
+recordRouter.use(jwtAuth);
 
 // all route must be on top, otherwise all gets interpreted as a bad id
 recordRouter.get("/all", recordController.fetchRecords);
