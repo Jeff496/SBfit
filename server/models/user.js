@@ -12,6 +12,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  googleId: {
+    type: String,
+    required: false,
+    unique: true,
+  },
 });
 
 userSchema.statics.signup = async function (email, password) {
