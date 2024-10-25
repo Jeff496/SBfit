@@ -34,9 +34,7 @@ const Login = () => {
         {error && <div className="error">{error}</div>}
       </form>
       <div className="google-OAuth">
-        <a href="http://localhost:3000/passport/auth/google">
-          Login with Google
-        </a>
+        <a href="http://localhost:3000/auth/google">Login with Google</a>
       </div>
     </div>
   );
