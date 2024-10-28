@@ -27,6 +27,10 @@ header a {
 }
 
 .pages {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 50vh;
   padding: 20px;
   margin: 0 auto;
 }
