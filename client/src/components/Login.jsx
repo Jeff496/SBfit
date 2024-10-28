@@ -33,9 +33,6 @@ const Login = () => {
         <button disabled={isLoading}>Login</button>
         {error && <div className="error">{error}</div>}
       </form>
-      <div className="google-OAuth">
-        <a href="http://localhost:3000/auth/google">Login with Google</a>
-      </div>
     </div>
   );
 };
