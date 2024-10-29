@@ -1,7 +1,11 @@
+import { useGoogleOAuth } from "../hooks/useGoogleOAuth";
+
 const GoogleOAuth = () => {
+  const { signInWithGoogle } = useGoogleOAuth();
+
   return (
     <div className="google-OAuth">
-      <a href="http://localhost:3000/auth/google">Login with Google</a>
+      <button onClick={signInWithGoogle}>Sign in with Google</button>
     </div>
   );
 };
