@@ -23,15 +23,15 @@ header .container {
 
 header a {
   text-decoration: none;
-  color: magenta;
+  color: black;
 }
 
 .pages {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 50vh;
-  padding: 20px;
+  height: 100vh;
+  padding: 20px 0;
   margin: 0 auto;
 }
 
@@ -51,6 +51,7 @@ input.error {
 
 .container {
   display: flex;
+  margin: 5px 20px;
 }
 
 .graph {
@@ -59,5 +60,5 @@ input.error {
 
 .form {
   padding: 50px 10px;
-  background-color: aqua;
+  background-color: yellow;
 }
