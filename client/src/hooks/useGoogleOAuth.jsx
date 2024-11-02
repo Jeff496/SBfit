@@ -9,18 +9,14 @@ export const useGoogleOAuth = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({}),
     });
 
-    const json = await response.json();
-
     if (!response.ok) {
-      console.log(json);
+      //   console.log(json);
     }
     if (response.ok) {
-      // store jwt in browser
-      localStorage.setItem("user", JSON.stringify(json));
-      dispatch({ type: ACTION_TYPES.LOGIN, payload: json });
+      //   localStorage.setItem("user", JSON.stringify(json));
+      //   dispatch({ type: ACTION_TYPES.LOGIN, payload: json });
     }
   };
 
