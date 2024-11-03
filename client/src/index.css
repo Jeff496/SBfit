@@ -56,5 +56,9 @@ input.error {
 
 .form {
   padding: 50px 10px;
-  background-color: yellow;
+  background-color: gold;
+}
+
+.google-OAuth button {
+  padding: 10px;
 }

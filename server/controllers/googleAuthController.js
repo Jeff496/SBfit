@@ -5,7 +5,7 @@ const asyncHandler = require("express-async-handler");
 // attach id to request body so record.user_id is filled
 
 const authenticateScope = asyncHandler((req, res) => {
-  res.send("/auth/google");
+  res.redirect("/auth/google");
   passport.authenticate("google", {
     scope: ["profile", "email"],
   });
